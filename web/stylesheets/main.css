@@ -34,3 +34,126 @@
 .jumbotron .lang-logo img {
   max-width: 100%;
 }
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 1px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+* {
+  /*border: 1px black solid;*/
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background: #f2f2f2;
+  font-family: 'Roboto', sans-serif;
+}
+
+.drawer {
+  position: absolute;
+  height: 100vh;
+  width: 300px;
+  background-color: #673AB7;
+}
+
+:root {
+  --topbar-height: 50px;
+}
+
+.topbar {
+  width: 100%;
+  height: var(--topbar-height);
+  background-color: #673AB7;
+}
+
+.content {
+  overflow-y: auto;
+  height: calc(100vh - var(--topbar-height));
+}
+
+.content .card {
+  background: #fff;
+}
+
+.footer {
+  width: 100%;
+  height: 50px;
+  background-color: #673AB7;
+}
+
+
+.container {
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.card {
+  border-radius: 2px;
+  box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+}
+
+.mb-2 {
+  margin-bottom: 2rem;
+}
+
+.wrapper {
+  margin-left: 300px;
+}
+
+.horizontal-scrollable {
+  display: flex;
+  grid-gap: 3px;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.poster-card {
+  position: relative;
+}
+
+.poster-card:hover  > .poster-annotation {
+  visibility: visible;
+}
+
+.poster-img > img {
+  max-height: 250px;
+  width: auto;
+}
+.poster-card > a {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.poster-annotation {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(41, 121, 255, 0.77);
+  color: #fff;
+  visibility: hidden;
+  overflow-y: hidden;
+}

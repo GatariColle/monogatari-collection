@@ -15,11 +15,27 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/views',
 ));
 
+// use php as rendering engine
+use Symfony\Component\Templating\PhpEngine;
+use Symfony\Component\Templating\TemplateNameParser;
+use Symfony\Component\Templating\Loader\FilesystemLoader;
+$app['templating'] = function() {
+
+    $loader = new FilesystemLoader(array(
+        __DIR__.'views/%name%'
+    ));
+
+    $templating = new PhpEngine(new TemplateNameParser(), $loader);
+    return $templating;
+};
+
 // Our web handlers
 
 $app->get('/', function() use($app) {
   $app['monolog']->addDebug('logging output.');
-  return $app['twig']->render('index.twig');
+  return $app['templating']->render(__DIR__.'/views/index.php');
+//   return $app['twig']->render('index.twig');
+
 });
 
 $app->run();

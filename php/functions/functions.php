@@ -15,5 +15,6 @@ function gettitlesformainpopular()
     $res = $con->query($sql);
     $cards = $res->fetch_all(MYSQLI_ASSOC);
     $con->close();
+    return $cards;
 }
 ?>
