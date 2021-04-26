@@ -70,4 +70,14 @@ HTML;
 HTML;
     echo $carousel;
 }
+
+function getchapterlist($id)
+{
+    require('connection.php');
+    $sql = "SELECT chpater_id, chapter_name from chapters where title_id = ".$id." ";
+    $res = $con->query($sql);
+    $cards = $res->fetch_all(MYSQLI_ASSOC);
+    $con->close();
+    return $cards;
+}
 ?>
