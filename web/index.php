@@ -38,4 +38,11 @@ $app->get('/', function() use($app) {
 
 });
 
+$app->get('/read/{title_id}', function($title_id) use ($app) {
+    $app['monolog']->addDebug('logging output.');
+    return $app['templating']->render(__DIR__.'/views/title.php', array('title_id' => $title_id));
+});
+
+// TODO: implement route 'title_id/chapter_id'
+
 $app->run();
