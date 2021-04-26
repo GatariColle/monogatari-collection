@@ -17,9 +17,8 @@ function gettitlesformainpopular()
     $con->close();
     return $cards;
 }
-function gettitleinfo()
+function gettitleinfo($id)
 {
-    $id = $_REQUEST['title_id'];
     require('connection.php');
     $sql = "SELECT * from titles where title_id = ".$id." ";
     $res = $con->query($sql);
@@ -27,9 +26,8 @@ function gettitleinfo()
     $con->close();
     return $cards;
 }
-function visitcounter()
+function visitcounter($id)
 {
-    $id = $_REQUEST['title_id'];
     require('connection.php');
     $sql = "UPDATE titles SET visit_counter = visit_counter + 1 where title_id = ".$id." ";
     $res = $con->query($sql);
