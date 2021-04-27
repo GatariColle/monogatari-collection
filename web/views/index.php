@@ -12,9 +12,6 @@ require dirname(__FILE__).'/../../php/functions/functions.php';
 <div class="wrapper">
     <div class="topbar"> Top bar</div>
     <div class="content">
-        <!-- TODO: Write a function with parameters name - to substitute h1 and data - array of cards -->
-
-        <!-- popular -->
         <div class="container">
         <?php carousel("Популярное", gettitlesformainpopular()); ?>
 
