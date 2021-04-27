@@ -42,6 +42,10 @@ function getchapterlist($id)
     $sql = "SELECT chapter_id, chapter_name from chapters where title_id = " . $id . " ";
     return selectAllQuery($sql);
 }
+function getchapter($tid,$cid){
+    $sql = "SELECT * from chapters where title_id =".$tid." and chapter_id = ".$cid." ";
+    return selectAllQuery($sql);
+}
 
 // views
 function carousel(string $name, array $data = null):void
