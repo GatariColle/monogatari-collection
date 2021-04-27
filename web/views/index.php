@@ -12,7 +12,7 @@ require dirname(__FILE__).'/../../php/functions/functions.php';
 <div class="wrapper">
     <div class="topbar"> Top bar</div>
     <div class="content">
-        <div class="container">
+        <div class="container gap-1 flex flex-column">
         <?php carousel("Популярное", gettitlesformainpopular()); ?>
 
         <?php carousel("Недавнее", gettitlesformainrecent()); ?>

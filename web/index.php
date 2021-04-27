@@ -40,9 +40,15 @@ $app->get('/', function() use($app) {
 
 $app->get('/read/{title_id}', function($title_id) use ($app) {
     $app['monolog']->addDebug('logging output.');
-    return $app['templating']->render(__DIR__.'/views/title.php', array('title_id' => $title_id));
+    return $app['templating']->render(__DIR__.'/views/title.php',
+        array('title_id' => $title_id));
 });
 
 // TODO: implement route 'title_id/chapter_id'
+$app->get('/read/{title_id}/{chapter_id}', function($title_id, $chapter_id) use ($app) {
+    $app['monolog']->addDebug('logging output.');
+    return $app['templating']->render(__DIR__.'/views/chapter.php',
+        array('title_id' => $title_id, 'chapter_id' => $chapter_id ));
+});
 
 $app->run();

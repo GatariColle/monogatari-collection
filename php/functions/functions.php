@@ -42,9 +42,10 @@ function getchapterlist($id)
     $sql = "SELECT chapter_id, chapter_name from chapters where title_id = " . $id . " ";
     return selectAllQuery($sql);
 }
+
 function getchapter($tid,$cid){
     $sql = "SELECT * from chapters where title_id =".$tid." and chapter_id = ".$cid." ";
-    return selectAllQuery($sql);
+    return selectOneQuery($sql);
 }
 
 // views
@@ -77,7 +78,7 @@ HTML;
     }
 
     $carousel = <<<HTML
-    <div class="card">
+    <div class="card p-1">
         <h1>$name</h1>
         <div class="horizontal-scrollable">
         $cards
@@ -88,10 +89,22 @@ HTML;
 }
 
 
-function generateTitlePage(array $titleInfo, array $chaptersList): void {
-//    echo "<pre>";
-//    print_r($titleInfo);
-//    exit(0);
+function generateTitlePage(int $title_id): void {
+    $titleInfo = gettitleinfo($title_id);
+    if (empty($titleInfo)) {
+        print_r("Nothing found. 404!");
+        exit(0);
+    }
+    $chaptersList = getchapterlist($title_id);
+    visitcounter($title_id);
+
+    $chapters = null;
+    foreach ($chaptersList as $chapter) {
+        $chapters .= <<< HTML
+        <li><a href="/read/{$titleInfo['title_id']}/{$chapter['chapter_id']}">{$chapter['chapter_name']}</a></li>
+HTML;
+    }
+
     $page = <<<HTML
     <div class="container card p-1">
             <div class="flex">
@@ -112,6 +125,8 @@ function generateTitlePage(array $titleInfo, array $chaptersList): void {
                         <div>{$titleInfo['title_jpname']}</div>
                         <div>годы выпуска:</div>
                         <div>{$titleInfo['years']}</div>
+                        <div>Эту страницы посетили</div>
+                        <div>{$titleInfo['visit_counter']} раз(-а)</div>
                     </div>
                 </div>
             </div>
@@ -121,13 +136,9 @@ function generateTitlePage(array $titleInfo, array $chaptersList): void {
             </div>
             <div>
                 <h2>Chapters</h2>
-                <div class="vertical-scrollable">
-                    <ol>
-                        <li>lorem</li>
-                        <li>ipsum</li>
-                        <li>dolor</li>
-                        <li>sit</li>
-                        <li>amet</li>
+                <div class="vertical-scrollable card">
+                    <ol class="chapters-list">
+                        {$chapters}
                     </ol>
                 </div>
             </div>
