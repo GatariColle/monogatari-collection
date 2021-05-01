@@ -8,16 +8,16 @@ require dirname(__FILE__).'/../../php/functions/functions.php';
     <?php include "header.html"; ?>
 </head>
 <body>
-<div class="drawer">Drawer</div>
+<?php include "drawer.html"?>
 <div class="wrapper">
-    <div class="topbar"> Top bar</div>
-    <div class="content">
+    <?php include "topbar.html"?>
+    <div class="content light">
         <div class="container gap-1 flex flex-column">
         <?php carousel("Популярное", gettitlesformainpopular()); ?>
 
         <?php carousel("Недавнее", gettitlesformainrecent()); ?>
         </div>
-        <?php include_once 'footer.html'?>
+        <?php include 'footer.html'?>
     </div>
 </div>
 <script type="text/javascript" src="/js/main.js"></script>

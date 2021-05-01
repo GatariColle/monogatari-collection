@@ -1,6 +1,5 @@
 <?php
 require dirname(__FILE__).'/../../php/functions/functions.php';
-
 ?>
 
 <!doctype html>
@@ -9,10 +8,10 @@ require dirname(__FILE__).'/../../php/functions/functions.php';
     <?php require 'header.html'?>
 </head>
 <body>
-<div class="drawer">Drawer</div>
+<?php include "drawer.html"?>
 <div class="wrapper">
-    <div class="topbar"> Top bar</div>
-    <div class="content">
+    <?php include "topbar.html"?>
+    <div class="content light">
         <?php generateTitlePage($title_id);?>
         <?php include_once 'footer.html'?>
     </div>

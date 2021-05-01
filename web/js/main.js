@@ -19,3 +19,17 @@
         }
     }
 })();
+
+(function () {
+    let drawerToggler = document.querySelector('.drawer-toggler');
+    function toggleDrawer(e) {
+        let drawer = document.querySelector('.drawer');
+        let wrapper = document.querySelector('.wrapper');
+
+        drawer.classList.toggle('drawer-expanded');
+        wrapper.classList.toggle('wrapper-shrinked');
+        e.preventDefault();
+    }
+
+    drawerToggler.addEventListener('click', toggleDrawer, false);
+})();

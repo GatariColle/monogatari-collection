@@ -2,6 +2,8 @@
 
 require('../vendor/autoload.php');
 
+use Symfony\Component\HttpFoundation\Request;
+
 $app = new Silex\Application();
 $app['debug'] = true;
 
@@ -44,11 +46,22 @@ $app->get('/read/{title_id}', function($title_id) use ($app) {
         array('title_id' => $title_id));
 });
 
-// TODO: implement route 'title_id/chapter_id'
 $app->get('/read/{title_id}/{chapter_id}', function($title_id, $chapter_id) use ($app) {
     $app['monolog']->addDebug('logging output.');
     return $app['templating']->render(__DIR__.'/views/chapter.php',
         array('title_id' => $title_id, 'chapter_id' => $chapter_id ));
+});
+
+$app->error(function(\Exception $e, Request $request, $code) use ($app) {
+    switch ($code) {
+        case 404:
+            $message = "Страница не найдена";
+            break;
+        default:
+            $message = "Произошла какая-то ошибка";
+    }
+    return $app['templating']->render(__DIR__.'/views/error_page.php',
+        array('message' => $message));
 });
 
 $app->run();

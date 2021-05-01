@@ -66,22 +66,17 @@ html, body {
   padding: 0;
   background: #f2f2f2;
   font-family: 'Roboto', sans-serif;
+  color: #FFF;
 }
 
 a {
-  color: #000;
+  color: inherit;
   text-decoration: none;
 }
 
 a:hover {
-  color: #555;
-}
-
-.drawer {
-  position: absolute;
-  height: 100vh;
-  width: 300px;
-  background-color: #673AB7;
+  color: #2979FF;
+  color: rgba(41, 121, 255, .7);
 }
 
 :root {
@@ -103,12 +98,16 @@ a:hover {
   background: #fff;
 }
 
+.content.light {
+  color: #000;
+}
+
 .footer {
   width: 100%;
   height: 50px;
   background-color: #673AB7;
+  color: #fff;
 }
-
 
 .container {
   width: 95%;
@@ -125,7 +124,26 @@ a:hover {
   margin-bottom: 2rem;
 }
 
+.drawer {
+  position: absolute;
+  height: 100vh;
+  width: 300px;
+  background-color: #673AB7;
+  padding-left: 1rem;
+  left: -100%;
+  z-index: 999;
+  overflow-y: auto;
+}
+
+.drawer-expanded {
+  left: 0;
+}
+
 .wrapper {
+  margin-left: 0;
+}
+
+.wrapper-shrinked {
   margin-left: 300px;
 }
 
@@ -212,7 +230,95 @@ a:hover {
   display: grid;
 }
 
+.align-center {
+  align-items: center;
+}
+
+.drawer-bottom {
+  margin-top: auto;
+  margin-bottom: 1rem;
+}
+
 .vertical-scrollable {
   max-height: 200px;
   overflow-y: auto;
+}
+
+/* Drawer */
+
+.logo {
+  grid-column-gap: 5px;
+}
+
+.nav {
+  list-style-type: none;
+  margin: 0;
+  padding-left: 0;
+}
+
+.nav-item {
+  font-weight: bold;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  grid-column-gap: 5px;
+}
+
+/* Topbar */
+.topbar {
+  /*position: fixed;*/
+  /*width: 100%;*/
+  display: flex;
+  padding: 8px;
+  align-items: center;
+}
+
+.searchbar {
+  display: flex;
+  width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 768px) {
+  .searchbar {
+    width: 700px;
+  }
+}
+
+.searchbar:hover .search-button {
+  background-color: #8561c5;
+}
+
+.searchbar > #search-input {
+  width: 100%;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+  padding: 8px;
+  color: #fff;
+}
+
+.searchbar > #search-input:focus
+{
+  outline: none;
+}
+
+.searchbar > .search-button:hover  {
+  cursor: pointer;
+}
+
+.searchbar > #search-input::placeholder {
+  color: rgb(195, 195, 195);
+}
+
+.searchbar > .search-button {
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.searchbar > #search-input,
+.searchbar > .search-button {
+  /* margin: 0; */
+  border: none;
+  background-color: #482880;
 }
