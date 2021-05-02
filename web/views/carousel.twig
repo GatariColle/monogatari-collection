@@ -1,0 +1,19 @@
+<div class="card p-1">
+    <h1>{{ name }}</h1>
+    <div class="horizontal-scrollable">
+        {% for poster in data %}
+            <div class="poster-card">
+                <div class="poster-img">
+                    <img src="{{ poster.title_cover }}" alt="{{ poster.title_name }} poster">
+                </div>
+                <div class="poster-annotation">
+                    <div class="container">
+                        <div class="center"><b>{{ poster.title_name }}</b></div>
+                        <div><p>{{ poster.title_description }}</p></div>
+                    </div>
+                </div>
+                <a href="/read/{{ poster.title_id }}"></a>
+            </div>
+        {% endfor %}
+    </div>
+</div>

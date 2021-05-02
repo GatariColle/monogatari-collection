@@ -1,12 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-  {% include 'header.html' %}
+    {% include 'header.html' %}
 </head>
 
 <body>
-  {% include 'nav.html' %}
-
-  {% block content %}{% endblock %}
+{% include 'drawer.html' %}
+<div class="wrapper">
+    {% include 'topbar.html' %}
+    <div class="content-wrapper {{ theme ?? 'light' }}">
+        {% block content %}{% endblock %}
+        {% include 'footer.html' %}
+    </div>
+</div>
+<script type="text/javascript" src="/js/main.js"></script>
 </body>
 </html>

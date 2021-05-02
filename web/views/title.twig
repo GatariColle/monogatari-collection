@@ -1,0 +1,44 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div class="container card p-1">
+        <div class="flex">
+            <div class="title-img">
+                <img src="{{ titleInfo.title_cover }}" alt="{{ titleInfo.title_altname }} poster">
+            </div>
+            <div class="title-info">
+                <div class="title-name">
+                    <h1>{{ titleInfo.title_name }}</h1>
+                </div>
+                <div class="title-status muted"><p>{{ titleInfo.status_translate }}; {{ titleInfo.status_publish }}</p>
+                </div>
+                <div class="grid">
+                    <div>Жанры:</div>
+                    <div>{{ titleInfo.genres }}</div>
+                    <div>Автор:</div>
+                    <div>{{ titleInfo.author }}</div>
+                    <div>Альт. имя:</div>
+                    <div>{{ titleInfo.title_altname }}</div>
+                    <div>годы выпуска:</div>
+                    <div>{{ titleInfo.years }}</div>
+                    <div>Эту страницы посетили</div>
+                    <div>{{ titleInfo.visit_counter }} раз(-а)</div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <h2>Аннотация</h2>
+            <p>{{ titleInfo.title_description }}</p>
+        </div>
+        <div>
+            <h2>Главы</h2>
+            <div class="vertical-scrollable card">
+                <ol class="chapters-list">
+                    {% for chapter in chaptersList %}
+                        <li><a href="/read/{{ titleInfo.title_id }}/{{ chapter.chapter_id }}">{{ chapter.chapter_name }}</a></li>
+                    {% endfor %}
+                </ol>
+            </div>
+        </div>
+    </div>
+{% endblock %}

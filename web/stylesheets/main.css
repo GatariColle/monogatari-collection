@@ -89,16 +89,19 @@ a:hover {
   background-color: #673AB7;
 }
 
-.content {
+.content-wrapper {
   overflow-y: auto;
   height: calc(100vh - var(--topbar-height));
+  display: flex;
+  flex-direction: column;
+  padding-top: 1rem;
 }
 
-.content .card {
+.content-wrapper .card {
   background: #fff;
 }
 
-.content.light {
+.content-wrapper.light {
   color: #000;
 }
 
@@ -107,6 +110,7 @@ a:hover {
   height: 50px;
   background-color: #673AB7;
   color: #fff;
+  margin-top: auto;
 }
 
 .container {
@@ -149,25 +153,32 @@ a:hover {
 
 .horizontal-scrollable {
   display: flex;
-  grid-gap: 3px;
+  grid-gap: 15px;
   overflow-x: auto;
   overflow-y: hidden;
 }
 
-.poster-card {
-  position: relative;
+.titles-grid {
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  grid-gap: 15px;
 }
 
-.poster-card:hover  > .poster-annotation {
+.poster-card {
+  position: relative;
+  width: fit-content;
+  width: -moz-fit-content;
+}
+
+.poster-card:hover .poster-annotation {
   visibility: visible;
 }
 
 .poster-img > img {
-  max-height: 250px;
+  max-height: 256px;
   width: auto;
 }
 
-.poster-card > a {
+.poster-card a {
   position: absolute;
   top: 0;
   width: 100%;
@@ -321,4 +332,41 @@ a:hover {
   /* margin: 0; */
   border: none;
   background-color: #482880;
+}
+
+
+.h-500 {
+  min-height: 500px;
+}
+
+/* Search page */
+
+.search-page-grid {
+  grid-template-columns: 4fr 1fr;
+  grid-gap: 15px;
+}
+
+.pl-1 {
+  padding-left: 1rem;
+}
+
+.filters-wrapper {
+  height: fit-content;
+}
+
+.filters-wrapper > button {
+  margin-top: 15px;
+}
+
+.filters {
+  grid-row-gap: 7px;
+}
+
+button {
+  padding: 5px;
+  width: fit-content;
+  width: -moz-fit-content;
+  background: #2979FF;
+  color: #fff;
+  border-radius: 5px;
 }

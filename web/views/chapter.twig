@@ -1,0 +1,8 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ chapter.chapter_name }}</h1>
+    <div>{{ chapter.chapter_text | raw }}</div>
+</div>
+{% endblock %}

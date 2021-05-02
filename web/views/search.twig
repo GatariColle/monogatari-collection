@@ -1,0 +1,44 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div class="container grid search-page-grid p-1">
+        <div class="card w-80">
+            {% if data %}
+                <div class="grid titles-grid p-1">
+                {% for poster in data %}
+                    <div class="poster-card">
+                        <div class="poster-img">
+                            <img src="{{ poster.title_cover }}" alt="{{ poster.title_name }} poster">
+                        </div>
+                        <div class="poster-annotation">
+                            <div class="container">
+                                <div class="center"><b>{{ poster.title_name }}</b></div>
+                                <div><p>{{ poster.title_description }}</p></div>
+                            </div>
+                        </div>
+                        <a href="/read/{{ poster.title_id }}"></a>
+                    </div>
+                {% endfor %}
+            </div>
+            {% else %}
+                <h1>Поиск не дал результатов</h1>
+                <p>По вашему запросу ничего не нашлось, попробуйте ещё раз.</p>
+            {% endif %}
+        </div>
+        <div class="card p-1 filters-wrapper">
+            <h3>Фильтровать по жанрам</h3>
+            <div class="filters flex flex-column">
+                <label for="Gengre1">
+                    <input type="checkbox" name="Gengre1" id="Gengre1">Genre1
+                </label>
+                <label for="Gengre2">
+                    <input type="checkbox" name="Gengre2" id="Gengre2">Genre2
+                </label>
+                <label for="Gengre3">
+                    <input type="checkbox" name="Gengre3" id="Gengre3">Genre3
+                </label>
+            </div>
+            <button type="button" id="apply-filters-button">Применить</button>
+        </div>
+    </div>
+{% endblock %}

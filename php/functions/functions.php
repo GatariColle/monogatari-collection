@@ -15,12 +15,12 @@ function selectAllQuery($sql): ?array {
     $con->close();
     return $result;
 }
-function gettitlesformainrecent()
+function getRecentTitles()
 {
     $sql = "SELECT title_id, title_name, title_description, title_cover from titles ORDER BY title_id DESC LIMIT 8";
     return selectAllQuery($sql);
 }
-function gettitlesformainpopular()
+function getPopularTitles()
 {
     $sql = "SELECT title_id, title_name, title_description, title_cover from titles ORDER BY visit_counter DESC LIMIT 8";
     return selectAllQuery($sql);
@@ -55,9 +55,8 @@ function chaptercheckprevious($tid,$cid){
     $sql = "SELECT chapter_id from chapters where title_id =".$tid." and chapter_id = ".$cid - 1 ." ";
     return (!empty(selectOneQuery($sql)));
 }
-function search(){
-    $search= $_POST['search'];
-    $sql = "SELECT title_id, title_name, title_description, title_cover from titles where title_name like '%$search%' ORDER BY title_id DESC";
+function search(string $query){
+    $sql = "SELECT title_id, title_name, title_description, title_cover from titles where title_name like '%$query%' ORDER BY title_id DESC";
     return selectAllQuery($sql);
 }
 // views
