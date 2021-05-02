@@ -1,6 +1,6 @@
 <?php
 
-function selectOneQuery($sql): array {
+function selectOneQuery($sql): ?array {
     require('connection.php');
     $response = $con->query($sql);
     $result = (!empty($response)) ? $response->fetch_assoc() : null;
@@ -8,7 +8,7 @@ function selectOneQuery($sql): array {
     return $result;
 }
 
-function selectAllQuery($sql): array {
+function selectAllQuery($sql): ?array {
     require('connection.php');
     $response = $con->query($sql);
     $result = (!empty($response)) ? $response->fetch_all(MYSQLI_ASSOC) : null;
@@ -54,6 +54,11 @@ function chapterchecknext($tid,$cid){
 function chaptercheckprevious($tid,$cid){
     $sql = "SELECT chapter_id from chapters where title_id =".$tid." and chapter_id = ".$cid - 1 ." ";
     return (!empty(selectOneQuery($sql)));
+}
+function search(){
+    $search= $_POST['search'];
+    $sql = "SELECT title_id, title_name, title_description, title_cover from titles where title_name like '%$search%' ORDER BY title_id DESC";
+    return selectAllQuery($sql);
 }
 // views
 function carousel(string $name, array $data = null):void
