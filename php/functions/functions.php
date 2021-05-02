@@ -47,7 +47,14 @@ function getchapter($tid,$cid){
     $sql = "SELECT * from chapters where title_id =".$tid." and chapter_id = ".$cid." ";
     return selectOneQuery($sql);
 }
-
+function chapterchecknext($tid,$cid){
+    $sql = "SELECT chapter_id from chapters where title_id =".$tid." and chapter_id = ".$cid + 1 ." ";
+    return (!empty(selectOneQuery($sql)));
+}
+function chaptercheckprevious($tid,$cid){
+    $sql = "SELECT chapter_id from chapters where title_id =".$tid." and chapter_id = ".$cid - 1 ." ";
+    return (!empty(selectOneQuery($sql)));
+}
 // views
 function carousel(string $name, array $data = null):void
 {
