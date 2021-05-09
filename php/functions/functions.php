@@ -15,6 +15,11 @@ function selectAllQuery($sql): ?array {
     $con->close();
     return $result;
 }
+
+function getNTitles(int $n) {
+    $sql = "SELECT title_id, title_name, title_description, title_cover from titles ORDER BY title_id DESC LIMIT ".$n;
+    return selectAllQuery($sql);
+}
 function getRecentTitles()
 {
     $sql = "SELECT title_id, title_name, title_description, title_cover from titles ORDER BY title_id DESC LIMIT 8";
@@ -47,20 +52,20 @@ function getchapter($tid,$cid){
     $sql = "SELECT * from chapters where title_id =".$tid." and chapter_id = ".$cid." ";
     return selectOneQuery($sql);
 }
-function chapterchecknext($tid,$cid){
+function chapterchecknext($tid,$cid): ?int{
     $sql = "SELECT chapter_id from chapters where title_id =".$tid." and chapter_id = ".$cid + 1 ." ";
-    return (!empty(selectOneQuery($sql)));
+    return !empty(selectOneQuery($sql)) ? $cid + 1 : null;
 }
-function chaptercheckprevious($tid,$cid){
+function chaptercheckprevious($tid,$cid): ?int{
     $sql = "SELECT chapter_id from chapters where title_id =".$tid." and chapter_id = ".$cid - 1 ." ";
-    return (!empty(selectOneQuery($sql)));
+    return !empty(selectOneQuery($sql)) ? $cid - 1 : null;
 }
 function search(string $query, ?string $genresStr){
     // genres: "genre1,genre2,genre3"
     // Hint: genres can be null, if none were selected
     // Todo: write a query if genres are not null
     $genres = explode(',', $genresStr);
-    $sql = "SELECT title_id, title_name, title_description, title_cover from titles where title_name like '%$query%' ORDER BY title_id DESC";
+    $sql = "SELECT title_id, title_name, title_description, title_cover from titles where title_name like '%$query%' ORDER BY title_id DESC LIMIT 10";
     return selectAllQuery($sql);
 }
 // views

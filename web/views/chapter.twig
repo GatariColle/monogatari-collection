@@ -1,8 +1,21 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<div class="container">
-    <h1>{{ chapter.chapter_name }}</h1>
-    <div>{{ chapter.chapter_text | raw }}</div>
-</div>
+    <div class="container">
+        <h1>{{ chapter.chapter_name }}</h1>
+        <div>{{ chapter.chapter_text | raw }}</div>
+
+
+        {% if prevId or nextId %}
+            <div class="chapter-switcher">
+                {% if prevId %}
+                    <a class="btn-primary" href="/read/{{ titleId }}/{{ prevId }}">Предыдущая глава</a>
+                {% endif %}
+                {% if nextId %}
+                    <a class="btn-primary" style="margin-left: auto" href="/read/{{ titleId }}/{{ nextId }}">Следующая глава</a>
+                {% endif %}
+            </div>
+        {% endif %}
+
+    </div>
 {% endblock %}

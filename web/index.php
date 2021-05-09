@@ -57,7 +57,13 @@ $app->get('/read/{title_id}', function($title_id) use ($app) {
 
 $app->get('/read/{title_id}/{chapter_id}', function($title_id, $chapter_id) use ($app) {
     $chapter = getchapter($title_id, $chapter_id);
-    return $app['twig']->render('chapter.twig', array('chapter' => $chapter));
+    $nextId = chapterchecknext($title_id, $chapter_id);
+    $prevId = chaptercheckprevious($title_id, $chapter_id);
+    return $app['twig']->render('chapter.twig',
+        array('titleId' => $title_id,
+            'chapter' => $chapter,
+            'nextId' => $nextId,
+            'prevId' => $prevId));
 });
 
 $app->get('/about', function() use ($app) {
@@ -69,8 +75,8 @@ $app->get('/login', function() use ($app) {
 });
 
 $app->get('/search', function () use ($app) {
-    $popularTitles = getPopularTitles();
-    return $app['twig']->render('search.twig', array('data' => $popularTitles));
+    $titles = getNTitles(10);
+    return $app['twig']->render('search.twig', array('data' => $titles));
 });
 
 $app->post('/search', function (Request $request) use ($app) {

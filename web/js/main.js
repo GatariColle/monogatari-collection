@@ -31,12 +31,13 @@
         e.preventDefault();
     }
 
-    drawerToggler.addEventListener('click', toggleDrawer, false);
+    drawerToggler.addEventListener('click', toggleDrawer, false)
 })();
 
 (function() {
     let applyFiltersButton = document.getElementById("apply-filters-button")
-    applyFiltersButton.onclick = () => {
+
+    function updateFormAction() {
         let genreTags = document.querySelectorAll('input[name=genre-checkbox]:checked')
         let genres = [];
         genreTags.forEach(ch => genres.push(ch.defaultValue))
@@ -51,4 +52,6 @@
 
         console.log(form.action)
     }
+
+    applyFiltersButton.addEventListener('click', updateFormAction, false)
 })()
