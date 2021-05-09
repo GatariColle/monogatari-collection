@@ -33,3 +33,22 @@
 
     drawerToggler.addEventListener('click', toggleDrawer, false);
 })();
+
+(function() {
+    let applyFiltersButton = document.getElementById("apply-filters-button")
+    applyFiltersButton.onclick = () => {
+        let genreTags = document.querySelectorAll('input[name=genre-checkbox]:checked')
+        let genres = [];
+        genreTags.forEach(ch => genres.push(ch.defaultValue))
+
+        let form = document.getElementById('search-filters-form')
+
+        let baseUrl = form.action.split('?')[0]
+
+        genres.length === 0
+            ? form.action = baseUrl
+            : form.action = `${baseUrl}?genres=${genres.toString()}`
+
+        console.log(form.action)
+    }
+})()

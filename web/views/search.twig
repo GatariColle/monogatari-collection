@@ -5,37 +5,45 @@
         <div class="card w-80">
             {% if data %}
                 <div class="grid titles-grid p-1">
-                {% for poster in data %}
-                    <div class="poster-card">
-                        <div class="poster-img">
-                            <img src="{{ poster.title_cover }}" alt="{{ poster.title_name }} poster">
-                        </div>
-                        <div class="poster-annotation">
-                            <div class="container">
-                                <div class="center"><b>{{ poster.title_name }}</b></div>
-                                <div><p>{{ poster.title_description }}</p></div>
+                    {% for poster in data %}
+                        <div class="poster-card">
+                            <div class="poster-img">
+                                <img src="{{ poster.title_cover }}" alt="{{ poster.title_name }} poster">
                             </div>
+                            <div class="poster-annotation">
+                                <div class="container">
+                                    <div class="center"><b>{{ poster.title_name }}</b></div>
+                                    <div><p>{{ poster.title_description }}</p></div>
+                                </div>
+                            </div>
+                            <a href="/read/{{ poster.title_id }}"></a>
                         </div>
-                        <a href="/read/{{ poster.title_id }}"></a>
-                    </div>
-                {% endfor %}
-            </div>
+                    {% endfor %}
+                </div>
             {% else %}
-                <h1>Поиск не дал результатов</h1>
-                <p>По вашему запросу ничего не нашлось, попробуйте ещё раз.</p>
+                <div class="p-1">
+                    <h1>Поиск не дал результатов</h1>
+                    <p>По вашему запросу ничего не нашлось, попробуйте ещё раз.</p>
+                </div>
             {% endif %}
         </div>
         <div class="card p-1 filters-wrapper">
-            <h3>Фильтровать по жанрам</h3>
+            <h3>Поиск по жанрам</h3>
+            <div class="mb-2">
+                <form action="/search" method="post" id="search-filters-form">
+                    <input type="text" name="query" id="search" placeholder="Название тайтла"
+                           autocomplete="off">
+                </form>
+            </div>
             <div class="filters flex flex-column">
-                <label for="Gengre1">
-                    <input type="checkbox" name="Gengre1" id="Gengre1">Genre1
+                <label for="genre1">
+                    <input type="checkbox" name="genre-checkbox" id="genre1" value="genre1">Genre1
                 </label>
-                <label for="Gengre2">
-                    <input type="checkbox" name="Gengre2" id="Gengre2">Genre2
+                <label for="genre2">
+                    <input type="checkbox" name="genre-checkbox" id="genre2" value="genre2">Genre2
                 </label>
-                <label for="Gengre3">
-                    <input type="checkbox" name="Gengre3" id="Gengre3">Genre3
+                <label for="genre3">
+                    <input type="checkbox" name="genre-checkbox" id="genre3" value="genre3">Genre3
                 </label>
             </div>
             <button type="button" id="apply-filters-button">Применить</button>

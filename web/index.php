@@ -74,8 +74,10 @@ $app->get('/search', function () use ($app) {
 });
 
 $app->post('/search', function (Request $request) use ($app) {
-    $query = $request->get('query') ?? '';
-    $searchResult = search($query);
+    $query = $request->get('query') ?? ''; // 'if null, consider as an empty string'
+    $genres = $request->get('genres'); // can be null
+    $app['monolog']->addDebug("query string: $query, and genres: $genres");
+    $searchResult = search($query, $genres);
     return $app['twig']->render('search.twig', array('data' => $searchResult));
 });
 

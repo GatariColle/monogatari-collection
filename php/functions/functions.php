@@ -55,7 +55,11 @@ function chaptercheckprevious($tid,$cid){
     $sql = "SELECT chapter_id from chapters where title_id =".$tid." and chapter_id = ".$cid - 1 ." ";
     return (!empty(selectOneQuery($sql)));
 }
-function search(string $query){
+function search(string $query, ?string $genresStr){
+    // genres: "genre1,genre2,genre3"
+    // Hint: genres can be null, if none were selected
+    // Todo: write a query if genres are not null
+    $genres = explode(',', $genresStr);
     $sql = "SELECT title_id, title_name, title_description, title_cover from titles where title_name like '%$query%' ORDER BY title_id DESC";
     return selectAllQuery($sql);
 }
