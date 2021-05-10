@@ -65,7 +65,11 @@ function search(string $query, ?string $genresStr){
     // Hint: genres can be null, if none were selected
     // Todo: write a query if genres are not null
     $genres = explode(',', $genresStr);
-    $sql = "SELECT title_id, title_name, title_description, title_cover from titles where title_name like '%$query%' ORDER BY title_id DESC LIMIT 10";
+    $g= "";
+    foreach ($genres as $genre) {
+        $g .= "and genres like '%$genre%' ";
+    }
+    $sql = "SELECT title_id, title_name, title_description, title_cover from titles where title_name like '%$query%' $g"."ORDER BY title_id DESC LIMIT 10";
     return selectAllQuery($sql);
 }
 // views
