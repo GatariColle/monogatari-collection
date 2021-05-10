@@ -36,15 +36,13 @@
                 </form>
             </div>
             <div class="filters flex flex-column">
-                <label for="genre1">
-                    <input type="checkbox" name="genre-checkbox" id="genre1" value="genre1">Genre1
-                </label>
-                <label for="genre2">
-                    <input type="checkbox" name="genre-checkbox" id="genre2" value="genre2">Genre2
-                </label>
-                <label for="genre3">
-                    <input type="checkbox" name="genre-checkbox" id="genre3" value="genre3">Genre3
-                </label>
+                {% set genreId = 1 %}
+                {% for genre in genresList %}
+                    <label for="{{ genre }}">
+                        <input type="checkbox" name="genre-checkbox" id="{{ genreId }}" value="{{ Genre }}">{{ Genre }}
+                        {% set genreId = genreId + 1 %}
+                    </label>
+                {% endfor %}
             </div>
             <button type="button" id="apply-filters-button">Применить</button>
         </div>

@@ -74,17 +74,23 @@ $app->get('/login', function() use ($app) {
     return $app['twig']->render('login.twig');
 });
 
-$app->get('/search', function () use ($app) {
+$genresList = array("Боевик", "Магия", "Научная фантастика", "Романтика",
+    "Сверхъестественное", "Комедия", "Драма", "Фэнтези", "Гарем", "Меха",
+    "Игра", "Приключение", "Мистика", "Психологическое", "Историческое",
+    "Ужасы", "Школа", "Демоны", "Детектив", "Школьная жизнь", "Этти");
+
+$app->get('/search', function () use ($app, $genresList) {
     $titles = getNTitles(10);
-    return $app['twig']->render('search.twig', array('data' => $titles));
+    return $app['twig']->render('search.twig', array('data' => $titles, 'genresList' => $genresList));
 });
 
-$app->post('/search', function (Request $request) use ($app) {
+$app->post('/search', function (Request $request) use ($app, $genresList) {
+
     $query = $request->get('query') ?? ''; // 'if null, consider as an empty string'
     $genres = $request->get('genres'); // can be null
     $app['monolog']->addDebug("query string: $query, and genres: $genres");
     $searchResult = search($query, $genres);
-    return $app['twig']->render('search.twig', array('data' => $searchResult));
+    return $app['twig']->render('search.twig', array('data' => $searchResult, 'genresList' => $genresList));
 });
 
 $app->error(function(\Exception $e, Request $request, $code) use ($app) {
