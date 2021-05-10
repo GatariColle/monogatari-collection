@@ -39,7 +39,7 @@
                 {% set genreId = 1 %}
                 {% for genre in genresList %}
                     <label for="{{ genre }}">
-                        <input type="checkbox" name="genre-checkbox" id="{{ genreId }}" value="{{ Genre }}">{{ Genre }}
+                        <input type="checkbox" name="genre-checkbox" id="{{ genreId }}" value="{{ genre }}">{{ genre }}
                         {% set genreId = genreId + 1 %}
                     </label>
                 {% endfor %}
