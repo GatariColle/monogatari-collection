@@ -1,6 +1,6 @@
 <?php
 
-function selectOneQuery($sql): ?array {
+function OneQuery($sql): ?array {
     require('connection.php');
     $response = $con->query($sql);
     $result = (!empty($response)) ? $response->fetch_assoc() : null;
@@ -8,7 +8,7 @@ function selectOneQuery($sql): ?array {
     return $result;
 }
 
-function selectAllQuery($sql): ?array {
+function AllQuery($sql): ?array {
     require('connection.php');
     $response = $con->query($sql);
     $result = (!empty($response)) ? $response->fetch_all(MYSQLI_ASSOC) : null;
@@ -18,22 +18,22 @@ function selectAllQuery($sql): ?array {
 
 function getNTitles(int $n) {
     $sql = "SELECT title_id, title_name, title_description, title_cover from titles ORDER BY title_id DESC LIMIT ".$n;
-    return selectAllQuery($sql);
+    return AllQuery($sql);
 }
 function getRecentTitles()
 {
     $sql = "SELECT title_id, title_name, title_description, title_cover from titles ORDER BY title_id DESC LIMIT 8";
-    return selectAllQuery($sql);
+    return AllQuery($sql);
 }
 function getPopularTitles()
 {
     $sql = "SELECT title_id, title_name, title_description, title_cover from titles ORDER BY visit_counter DESC LIMIT 8";
-    return selectAllQuery($sql);
+    return AllQuery($sql);
 }
 function gettitleinfo($id)
 {
     $sql = "SELECT * from titles where title_id = ".$id." ";
-    return selectOneQuery($sql);
+    return OneQuery($sql);
 }
 function visitcounter($id)
 {
@@ -45,20 +45,20 @@ function visitcounter($id)
 function getchapterlist($id)
 {
     $sql = "SELECT chapter_id, chapter_name from chapters where title_id = " . $id . " ";
-    return selectAllQuery($sql);
+    return AllQuery($sql);
 }
 
 function getchapter($tid,$cid){
     $sql = "SELECT * from chapters where title_id =".$tid." and chapter_id = ".$cid." ";
-    return selectOneQuery($sql);
+    return OneQuery($sql);
 }
 function chapterchecknext($tid,$cid): ?int{
     $sql = "SELECT chapter_id from chapters where title_id =".$tid." and chapter_id = ".$cid + 1 ." ";
-    return !empty(selectOneQuery($sql)) ? $cid + 1 : null;
+    return !empty(OneQuery($sql)) ? $cid + 1 : null;
 }
 function chaptercheckprevious($tid,$cid): ?int{
     $sql = "SELECT chapter_id from chapters where title_id =".$tid." and chapter_id = ".$cid - 1 ." ";
-    return !empty(selectOneQuery($sql)) ? $cid - 1 : null;
+    return !empty(OneQuery($sql)) ? $cid - 1 : null;
 }
 function search(string $query, ?string $genresStr){
     // genres: "genre1,genre2,genre3"
@@ -70,7 +70,30 @@ function search(string $query, ?string $genresStr){
         $g .= "and genres like '%$genre%' ";
     }
     $sql = "SELECT title_id, title_name, title_description, title_cover from titles where title_name like '%$query%' $g"."ORDER BY title_id DESC LIMIT 10";
-    return selectAllQuery($sql);
+    return AllQuery($sql);
+}
+// registration and login
+function registration(){
+    $login = $_POST['login'];
+    $pass = $_POST['password'];
+    $sql = "INSERT INTO accounts(login, password, access_rank) VALUES ('$login','$pass',0);";
+    return AllQuery($sql);
+}
+function sessionstart(){
+    session_start();
+}
+function login(){
+    $login = $_POST['login'];
+    $pass = $_POST['password'];
+    $sql = "SELECT login,access_rank from accounts where login = '$login' and password = '$pass'";
+    $res = AllQuery($sql);
+    $_SESSION["login"] = $res['login'];
+    $_SESSION["logined"] = true;
+    $_SESSION["access_rank"] = $res['access_rank'];
+}
+function sessionquit()
+{
+    session_destroy();
 }
 // views
 function carousel(string $name, array $data = null):void
