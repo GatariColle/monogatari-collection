@@ -22,6 +22,10 @@
 
 (function () {
     let drawerToggler = document.querySelector('.drawer-toggler');
+
+    if (!drawerToggler)
+        return;
+
     function toggleDrawer(e) {
         let drawer = document.querySelector('.drawer');
         let wrapper = document.querySelector('.wrapper');
@@ -34,8 +38,11 @@
     drawerToggler.addEventListener('click', toggleDrawer, false)
 })();
 
-(function() {
+(function () {
     let applyFiltersButton = document.getElementById("apply-filters-button")
+
+    if (!applyFiltersButton)
+        return;
 
     function updateFormAction() {
         let genreTags = document.querySelectorAll('input[name=genre-checkbox]:checked')
@@ -54,4 +61,38 @@
     }
 
     applyFiltersButton.addEventListener('click', updateFormAction, false)
-})()
+})();
+
+
+function renderMessage(message) {
+    let form = document.querySelector('form')
+
+    if (!form)
+        return
+
+    if (!form.querySelector('#message')) {
+        let html = `<div id="message">${message}</div>`
+        form.insertAdjacentHTML('beforeend', html)
+    }
+}
+
+
+(function () {
+    let userRegisterButton = document.getElementById("user-register-button");
+
+    if (!userRegisterButton)
+        return;
+
+    function checkPasswordsMatching(e) {
+        let form = document.querySelector('form')
+
+        if (form.action.endsWith("/register")) {
+            if (form.querySelector('#password').value !== form.querySelector('#password-confirmation').value) {
+                renderMessage('Пароли не совпадают')
+                e.preventDefault()
+            }
+        }
+    }
+
+    userRegisterButton.addEventListener('click', checkPasswordsMatching)
+})();

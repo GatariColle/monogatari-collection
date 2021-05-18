@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    {% include 'header.html'%}
+</head>
+<body>
+<div class="content-wrapper {{ theme ?? 'light' }}">
+    <div class="card form-card">
+        <form action="/register" method="post">
+            <div class="form-group">
+                <label for="login">Имя пользователя</label>
+                <input type="text" class="form-control" name="login" id="login" placeholder="Юзернейм" required minlength="5">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Пароль от аккаунта</label>
+                <input type="password" class="form-control" name="password" id="password" placeholder="Пароль" required minlength="8">
+            </div>
+
+            <div class="form-group">
+                <label for="password-confirmation">Подтверждение пароля</label>
+                <input type="password" class="form-control" name="password-confirmation" id="password-confirmation" placeholder="Введите пароль ещё раз" required minlength="8">
+            </div>
+
+            <button type="submit" class="btn btn-primary" id="user-register-button">Создать аккаунт</button>
+            <a href="/login">Уже есть аккаунт?</a>
+        </form>
+    </div>
+</div>
+<script type="text/javascript" src="/js/main.js"></script>
+</body>
+</html>

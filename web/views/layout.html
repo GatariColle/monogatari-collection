@@ -5,7 +5,12 @@
 </head>
 
 <body>
-{% include 'drawer.html' %}
+{% if user is null %}
+    {% include 'drawer.twig' %}
+{% else %}
+    {% include 'drawer.twig' with {user} %}
+{% endif %}
+
 <div class="wrapper">
     {% include 'topbar.html' %}
     <div class="content-wrapper {{ theme ?? 'light' }}">

@@ -4,11 +4,11 @@
   padding-bottom: 80px;
 }
 .btn-primary {
-  display: inline-block;
+  /*display: inline-block;*/
   background: #2979FF;
   border-color: #2979FF;
   color: #fff;
-  padding: 15px;
+  /*padding: 15px;*/
   border-radius: 3px;
 }
 .btn-primary:hover {
@@ -389,4 +389,16 @@ input#search {
 .chapter-switcher {
   margin-top: 1rem;
   margin-bottom: 1rem;
+}
+
+
+/* Login and Registration pages */
+
+.form-card {
+  width: 40%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10%;
+  height: 60%;
+  padding: 2rem;
 }
