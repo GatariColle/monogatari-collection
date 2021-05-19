@@ -79,9 +79,10 @@ function registration($login, $pass): bool{
     if(empty($res)){
         $sql = "INSERT INTO accounts(login, password, access_rank) VALUES ('$login','$pass',0);";
         return queryAll($sql);
+        return true;
     }
     else {
-        //error
+        return false;
     }
 }
 
