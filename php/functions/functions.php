@@ -1,7 +1,7 @@
 <?php
 function insert($sql){
     require ('connection.php');
-    mysqli_query($con, $sql);
+    $con->query($sql);
 }
 function queryOne($sql): ?array {
     require('connection.php');
