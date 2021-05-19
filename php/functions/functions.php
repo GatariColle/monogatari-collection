@@ -73,11 +73,16 @@ function search(string $query, ?string $genresStr){
     return queryAll($sql);
 }
 // registration and login
-function registration(){
-    $login = $_POST['login'];
-    $pass = $_POST['password'];
-    $sql = "INSERT INTO accounts(login, password, access_rank) VALUES ('$login','$pass',0);";
-    return queryAll($sql);
+function registration($login, $pass): bool{
+    $sql = "SELECT login from accounts where login ='$login'";
+    $res = queryOne($sql);
+    if(empty($res)){
+        $sql = "INSERT INTO accounts(login, password, access_rank) VALUES ('$login','$pass',0);";
+        return queryAll($sql);
+    }
+    else {
+        //error
+    }
 }
 
 function start_session(){
