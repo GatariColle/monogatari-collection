@@ -78,7 +78,7 @@ function registration($login, $pass): bool{
     $res = queryOne($sql);
     if(empty($res)){
         $sql = "INSERT INTO accounts(login, password, access_rank) VALUES ('$login','$pass',1);";
-        queryOne($sql);
+        mysqli_query($sql);
         return true;
     }
     else {
