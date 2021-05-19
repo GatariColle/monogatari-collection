@@ -137,7 +137,7 @@ $app->post('/register', function () use ($app) {
         }                                 // just in case someone will try to send post request from outside :)
 
         // try to register, if successful, redirect to login page
-        if (register($login, $pass)) {
+        if (registration($login, $pass)) {
             return $app->redirect('/login?registration_success');
         }
         return $app->redirect('/register?user_exists');
