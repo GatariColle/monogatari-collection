@@ -5,14 +5,13 @@
 </head>
 
 <body>
-{% if user is null %}
-    {% include 'drawer.twig' %}
-{% else %}
-    {% include 'drawer.twig' with {user} %}
-{% endif %}
-
+{% include 'drawer.twig' %}
 <div class="wrapper">
-    {% include 'topbar.html' %}
+    {% if user is null %}
+        {% include 'topbar.html' %}
+    {% else %}
+        {% include 'topbar.html' with {user} %}
+    {% endif %}
     <div class="content-wrapper {{ theme ?? 'light' }}">
         {% block content %}{% endblock %}
         {% include 'footer.html' %}

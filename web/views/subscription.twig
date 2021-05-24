@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="card p-1 mb-2">
+            <h1>Подписка</h1>
+            {% if not user is null and user.access_rank > 1 %}
+                <p>Статус подписки: Активна</p>
+                <p>Спасибо за поддержку! Наслаждайся экслюзивами :)</p>
+                <button class="btn btn-primary">Отменить</button>
+            {% else %}
+                <p>Статус подписки: Не активна</p>
+                <p>Оформи подписку чтобы поддержать проект и получить доступ к экслюзивным тайтлам всего за N тенге/месяц!</p>
+                <button class="btn btn-primary" id="show-payment-form-button" >Оформить</button>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

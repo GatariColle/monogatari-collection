@@ -1,4 +1,4 @@
-(function() {
+(function () {
     let horizontalScrollables = document.querySelectorAll('.horizontal-scrollable')
     function scrollHorizontally(e) {
         e = window.event || e;
@@ -70,9 +70,13 @@ function renderMessage(message) {
     if (!form)
         return
 
-    if (!form.querySelector('#message')) {
+    let messageDiv = form.querySelector('#message');
+
+    if (!messageDiv) {
         let html = `<div id="message">${message}</div>`
         form.insertAdjacentHTML('beforeend', html)
+    } else {
+        messageDiv.textContent = message;
     }
 }
 
@@ -96,3 +100,70 @@ function renderMessage(message) {
 
     userRegisterButton.addEventListener('click', checkPasswordsMatching)
 })();
+
+(function () {
+    let showPaymentFormButton  = document.getElementById('show-payment-form-button');
+    if (!showPaymentFormButton)
+        return
+
+    let insertPaymentForm = () => {
+        let paymentForm = '<div class="card p-1">\n' +
+            '            <h1>Оплата</h1>\n' +
+            '            <form action="/subscribe" method="post" style="width: 30%;">\n' +
+            '                <div class="form-group">\n' +
+            '                    <label for="card-no">Номер карты</label>\n' +
+            '                    <input type="text" name="card-no" id="card-no" placeholder="Номер банковской карты" required>\n' +
+            '                    <p id="card-no-msg"></p>\n' +
+            '                </div>\n' +
+            '\n' +
+            '                <div class="form-group">\n' +
+            '                    <label for="cvv-cvc">CVV/CVC</label>\n' +
+            '                    <input type="number" name="cvv-cvc" id="cvv-cvc" placeholder="CVV/CVC с обратной стороны карты" required min="0">\n' +
+            '                    <p id="cvv-cvc-msg"></p>\n' +
+            '                </div>\n' +
+            '            <button type="submit" class="btn btn-primary">Оплатить</button>\n' +
+            '            </form>\n' +
+            '        </div>'
+
+        document.querySelector('.container > .card').insertAdjacentHTML('afterend', paymentForm);
+        document.querySelector('.container > .card').remove();
+
+        let paymentFormNode = document.querySelector("form[action='/subscribe']")
+
+        let cardNoInput = paymentFormNode.querySelector('#card-no')
+
+        cardNoInput.addEventListener('blur', (e) => {
+            let cardNo = cardNoInput.value
+            if (validateCardNo(cardNo))
+                document.querySelector("p#card-no-msg").textContent = 'Отлично!'
+            else
+                document.querySelector("p#card-no-msg").textContent = 'Некорректный номер карты'
+        })
+    }
+
+    showPaymentFormButton.addEventListener('click', insertPaymentForm)
+})();
+
+
+let validateCardNo = function (no) {
+    return (no && checkLuhn(no) &&
+        no.length === 16 && (parseInt(no[0]) === 4 || parseInt(no[0]) === 5 && no[1] >= 1 && no[1] <= 5 ||
+            (no.indexOf("6011") === 0 || no.indexOf("65") === 0)) ||
+        no.length === 15 && (no.indexOf("34") === 0 || no.indexOf("37") === 0) ||
+        no.length === 13 && parseInt(no[0]) === 4)
+}
+let checkLuhn = function (cardNo) {
+    let s = 0;
+    let doubleDigit = false;
+    for (let i = cardNo.length - 1; i >= 0; i--) {
+        let digit = +cardNo[i];
+        if (doubleDigit) {
+            digit *= 2;
+            if (digit > 9)
+                digit -= 9;
+        }
+        s += digit;
+        doubleDigit = !doubleDigit;
+    }
+    return parseInt(s) % 10 === 0;
+}

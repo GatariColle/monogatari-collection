@@ -41,6 +41,15 @@ function render(string $templateName, array $args = null) {
     return $GLOBALS['app']['twig']->render($templateName, $args);
 }
 
+function getUser() {
+    start_session();
+    return $_SESSION['user'] ?? null;
+}
+
+function getReferer() {
+    return empty($_SERVER['HTTP_REFERER']) ? '/' : $_SERVER['HTTP_REFERER'];
+}
+
 // Our web handlers
 
 $app->get('/', function() use ($app) {
@@ -56,7 +65,7 @@ $app->get('/read/{title_id}', function($title_id) use ($app) {
         return $app['templating']->render(__DIR__ . '/views/error_page.twig',
             array('message' => "Страница не найдена"));
     }
-    $chaptersList = getchapterlist($title_id);
+    $chaptersList = is_null(getUser()) ? null : getchapterlist($title_id);
     visitcounter($title_id);
 
     return render('title.twig',
@@ -65,6 +74,10 @@ $app->get('/read/{title_id}', function($title_id) use ($app) {
 
 
 $app->get('/read/{title_id}/{chapter_id}', function($title_id, $chapter_id) use ($app) {
+
+    if (is_null(getUser()))
+        return $app->redirect('/login?login_required');
+
     $chapter = getchapter($title_id, $chapter_id);
     $nextId = chapterchecknext($title_id, $chapter_id);
     $prevId = chaptercheckprevious($title_id, $chapter_id);
@@ -91,6 +104,8 @@ $app->get('/login', function() use ($app) {
         return render('login.twig') . "<script>renderMessage('Не удалось войти')</script>";
     } else if (isset($_GET['registration_success'])) {
         return render('login.twig') . "<script>renderMessage('Вы успешно зарегистрировались! Пожалуйста, выполните вход.')</script>";
+    } else if (isset($_GET['login_required'])) {
+        return render('login.twig') . "<script>renderMessage('Пожалуйста, зарегистрируйтесь или войдите в свою учетную запись, чтобы получить доступ к этой странице')</script>";
     } else {
         return render('login.twig');
     }
@@ -110,7 +125,13 @@ $app->get('/register', function() use ($app) {
 
 $app->get('/logout', function() use ($app) {
     logOut();
-    return $app->redirect('/');
+    return $app->redirect(getReferer());
+});
+
+$app->get('/subscription', function() use ($app) {
+    if (is_null(getUser()))
+        return $app->redirect('/login?login_required');
+    return render('subscription.twig');
 });
 
 $app->post('/login', function() use ($app) {
@@ -162,6 +183,10 @@ $app->post('/search', function (Request $request) use ($app, $genresList) {
     $app['monolog']->addDebug("query string: $query, and genres: $genres");
     $searchResult = search($query, $genres);
     return render('search.twig', array('data' => $searchResult, 'genresList' => $genresList));
+});
+
+$app->get('/error', function() use ($app) {
+    throw new Exception("Sample error");
 });
 
 $app->error(function(\Exception $e, Request $request, $code) use ($app) {

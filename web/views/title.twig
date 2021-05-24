@@ -32,6 +32,11 @@
         </div>
         <div>
             <h2>Главы</h2>
+            {% if user is null %}
+            <div>
+                <p>Пожалуйста, зарегистрируйтесь или войдите в свою учетную запись, чтобы получить доступ к прочтению глав</p>
+            </div>
+            {% else %}
             <div class="vertical-scrollable card">
                 <ol class="chapters-list">
                     {% for chapter in chaptersList %}
@@ -39,6 +44,7 @@
                     {% endfor %}
                 </ol>
             </div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
