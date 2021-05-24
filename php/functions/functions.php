@@ -123,7 +123,7 @@ function subscription($login): bool{
     }
 }
 function unsubscription($login): bool{
-    if ($_SESSION["user"]['access_rank'] =2) {
+    if ($_SESSION["user"]['access_rank'] == 2) {
         $sql = "UPDATE accounts SET access_rank = 1 where login = '$login'";
         $_SESSION["user"]['access_rank'] = 1;
         insert($sql);
