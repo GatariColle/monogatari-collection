@@ -25,12 +25,12 @@ function getNTitles(int $n) {
 }
 function getRecentTitles()
 {
-    $sql = "SELECT title_id, title_name, title_description, title_cover from titles ORDER BY title_id DESC LIMIT 8";
+    $sql = "SELECT title_id, title_name, title_description, title_cover, title_rank_acceess from titles ORDER BY title_id DESC LIMIT 8";
     return queryAll($sql);
 }
 function getPopularTitles()
 {
-    $sql = "SELECT title_id, title_name, title_description, title_cover from titles ORDER BY visit_counter DESC LIMIT 8";
+    $sql = "SELECT title_id, title_name, title_description, title_cover, title_rank_acceess from titles ORDER BY visit_counter DESC LIMIT 8";
     return queryAll($sql);
 }
 function gettitleinfo($id)
@@ -109,6 +109,9 @@ function logIn($login, $pass): bool {
     return false;
 }
 function subscription($login): bool{
+
+    // Your payment checking function call could be here
+
     if ($_SESSION["user"]['access_rank'] <2) {
         $sql = "UPDATE accounts SET access_rank = 2 where login = '$login'";
         $_SESSION["user"]['access_rank'] = 2;

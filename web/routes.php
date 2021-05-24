@@ -90,8 +90,9 @@ $app->post('/subscribe', function() use ($app) {
 
     if ($user['access_rank'] > 1)
         return "Subscription already active";
+
     else if (subscription($user['login'])) {
-        $app->redirect('/subscription');
+        return $app->redirect('/subscription');
     }
 });
 

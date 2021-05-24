@@ -5,7 +5,6 @@
         <h1>{{ chapter.chapter_name }}</h1>
         <div>{{ chapter.chapter_text | raw }}</div>
 
-
         {% if prevId is not null or nextId is not null %}
             <div class="chapter-switcher">
                 {% if prevId is not null %}
