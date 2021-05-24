@@ -119,6 +119,17 @@ function subscription($login): bool{
         return false;
     }
 }
+function unsubscription($login): bool{
+    if ($_SESSION["user"]['access_rank'] =2) {
+        $sql = "UPDATE accounts SET access_rank = 1 where login = '$login'";
+        $_SESSION["user"]['access_rank'] = 1;
+        insert($sql);
+        return true;
+    }
+    else{
+        return false;
+    }
+}
 function logOut() {
 
     session_start();
