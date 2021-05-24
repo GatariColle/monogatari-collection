@@ -24,9 +24,14 @@ $app->get('/read/{title_id}', function($title_id) use ($app) {
 
 $app->get('/read/{title_id}/{chapter_id}', function($title_id, $chapter_id) use ($app) {
 
-    if (is_null(getUser()))
+    $user = getUser();
+    if (is_null($user))
         return $app->redirect('/login?login_required');
 
+
+    $titleInfo = gettitleinfo($title_id);
+    if ($user['access_rank'] < $titleInfo['title_rank_acceess'])
+        throw new Exception("Доступно только с подпиской", "403");
     $chapter = getchapter($title_id, $chapter_id);
     $nextId = chapterchecknext($title_id, $chapter_id);
     $prevId = chaptercheckprevious($title_id, $chapter_id);
@@ -81,6 +86,18 @@ $app->get('/subscription', function() use ($app) {
     if (is_null(getUser()))
         return $app->redirect('/login?login_required');
     return render('subscription.twig');
+});
+
+$app->get('/unsubscribe', function() use ($app) {
+    $user = getUser();
+    if (is_null(getUser()))
+        throw new Exception("Something's wrong.");
+
+    if (unsubscription($user['login']))
+        return $app->redirect('subscription');
+    else
+        throw new Exception("Something's wrong.");
+
 });
 
 $app->post('/subscribe', function() use ($app) {
@@ -138,6 +155,7 @@ $app->get('/search', function () use ($app, $genresList) {
     return render('search.twig', array('data' => $titles, 'genresList' => $genresList));
 });
 
+use Symfony\Component\HttpFoundation\Request;
 $app->post('/search', function (Request $request) use ($app, $genresList) {
 
     $query = $request->get('query') ?? ''; // 'if null, consider as an empty string'

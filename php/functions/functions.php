@@ -20,7 +20,7 @@ function queryAll($sql): ?array {
 }
 
 function getNTitles(int $n) {
-    $sql = "SELECT title_id, title_name, title_description, title_cover from titles ORDER BY title_id DESC LIMIT ".$n;
+    $sql = "SELECT title_id, title_name, title_description, title_cover, title_rank_acceess from titles ORDER BY title_id DESC LIMIT ".$n;
     return queryAll($sql);
 }
 function getRecentTitles()
@@ -72,7 +72,7 @@ function search(string $query, ?string $genresStr){
     foreach ($genres as $genre) {
         $g .= "and genres like '%$genre%' ";
     }
-    $sql = "SELECT title_id, title_name, title_description, title_cover from titles where title_name like '%$query%' $g"."ORDER BY title_id DESC LIMIT 10";
+    $sql = "SELECT title_id, title_name, title_description, title_cover, title_rank_acceess from titles where title_name like '%$query%' $g"."ORDER BY title_id DESC LIMIT 10";
     return queryAll($sql);
 }
 // registration and login
@@ -244,6 +244,7 @@ function getUser() {
 }
 
 function getReferer() {
-    return empty($_SERVER['HTTP_REFERER']) ? '/' : $_SERVER['HTTP_REFERER'];
+    return !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '/';
 }
+
 ?>

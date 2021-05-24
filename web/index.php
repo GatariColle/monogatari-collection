@@ -3,8 +3,6 @@
 require('../vendor/autoload.php');
 require dirname(__FILE__).'/../php/functions/functions.php';
 
-use Symfony\Component\HttpFoundation\Request;
-
 $app = new Silex\Application();
 $app['debug'] = true;
 
@@ -23,17 +21,22 @@ function render(string $templateName, array $args = null) {
 
     start_session();
     $args['user'] = $_SESSION['user'] ?? null;
-
     return $GLOBALS['app']['twig']->render($templateName, $args);
 }
 
 // Our web handlers
 include_once 'routes.php';
-
+use Symfony\Component\HttpFoundation\Request;
 $app->error(function(\Exception $e, Request $request, $code) {
+    $exceptionCode = $e->getCode();
+    if (!empty($exceptionCode))
+        $code = $exceptionCode;
     switch ($code) {
         case 404:
             $message = "Страница не найдена";
+            break;
+        case 403:
+            $message = "Доступ воспрещён";
             break;
         default:
             $message = "Произошла какая-то ошибка";
