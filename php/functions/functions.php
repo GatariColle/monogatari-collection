@@ -234,4 +234,13 @@ HTML;
 
     echo $page;
 }
+
+function getUser() {
+    start_session();
+    return $_SESSION['user'] ?? null;
+}
+
+function getReferer() {
+    return empty($_SERVER['HTTP_REFERER']) ? '/' : $_SERVER['HTTP_REFERER'];
+}
 ?>
