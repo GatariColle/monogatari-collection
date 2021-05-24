@@ -108,15 +108,21 @@ function logIn($login, $pass): bool {
     }
     return false;
 }
-
+function subscription($login): bool{
+    if ($_SESSION["user"]['access_rank'] <2) {
+        $sql = "UPDATE accounts SET access_rank = 2 where login = '$login'";
+        $_SESSION["user"]['access_rank'] = 2;
+        insert($sql);
+        return true;
+    }
+    else{
+        return false;
+    }
+}
 function logOut() {
 
     session_start();
     unset($_SESSION['user']);
-}
-function sessionquit()
-{
-    session_destroy();
 }
 // views
 function carousel(string $name, array $data = null):void
