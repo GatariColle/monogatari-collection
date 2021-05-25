@@ -2,8 +2,8 @@
 
 {% block content %}
 <div class="container gap-1 flex flex-column">
-    {{ include('carousel.twig', {'name': 'Популярное', data: popular }) }}
+    {{ include('carousel.html', {'name': 'Популярное', data: popular }) }}
 
-    {{ include('carousel.twig', {'name': 'Недавнее', data: recent }) }}
+    {{ include('carousel.html', {'name': 'Недавнее', data: recent }) }}
 </div>
 {% endblock %}
