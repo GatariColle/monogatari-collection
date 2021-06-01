@@ -9,16 +9,24 @@ $app->get('/', function() use ($app) {
 });
 
 $app->get('/read/{title_id}', function($title_id) use ($app) {
-    $titleInfo = gettitleinfo($title_id);
+    $login = is_null(getUser()) ? '' : getUser()['login'];
+    $titleInfo = gettitleinfo($title_id, $login);
     if (empty($titleInfo)) {
-        return render(__DIR__ . '/views/error_page.twig',
+        return render('error_page.twig',
             array('message' => "Страница не найдена"));
     }
     $chaptersList = is_null(getUser()) ? null : getchapterlist($title_id);
     visitcounter($title_id);
 
+    $buttons = [
+        ['name' => 'planning', 'text' => 'В планах'],
+        ['name' => 'reading',  'text' => 'Читаю'],
+        ['name' => 'finished', 'text' => 'Прочтено'],
+        ['name' => 'dropped',  'text' => 'Завершено'],
+    ];
+
     return render('title.twig',
-        array('titleInfo' => $titleInfo, 'chaptersList' => $chaptersList));
+        array('titleInfo' => $titleInfo, 'chaptersList' => $chaptersList, 'buttons' => $buttons));
 });
 
 

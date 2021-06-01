@@ -10,11 +10,11 @@
                         <form action="/bookmarks" method="post" id="bookmark-form">
                             <select name="bookmark-status" id="bookmark-status"
                                     class="bookmark-selector" onchange="submitForm('bookmark-form');">
-                                <option value="default" selected disabled>Статус прочтения</option>
-                                <option value="planning">В планах</option>
-                                <option value="reading">Читаю</option>
-                                <option value="finished">Прочтено</option>
-                                <option value="dropped">Заброшено</option>
+                                <option value="default" {% if titleInfo.status is null %} selected {% endif %} disabled>Статус прочтения</option>
+
+                                {% for button in buttons %}
+                                    <option value="{{ button.name }}" {% if titleInfo.status == button.name %} selected class='bg-green' {% endif %}>{{ button.text }}</option>
+                                {% endfor %}
                                 <option value="delete" class="color-red">Удалить из закладок</option>
                             </select>
                         </form>
