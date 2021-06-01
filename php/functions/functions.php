@@ -141,10 +141,10 @@ function unsubscription($login): bool{
 }
 //bookmarks
 function addbookmark($login, $title_id, $status): bool{
-    $sql = "Select * from bookmarks where login = '$login' and where title_id ='$title_id'";
+    $sql = "Select * from bookmarks where login = '$login' and title_id ='$title_id'";
     $res = queryOne($sql);
     if(empty($res)){
-        $sql = "INSERT INTO bookmarks(login, title_id,status) VALUES ('$login','$title_id','$status');";
+        $sql = "INSERT INTO bookmarks(login,title_id,status) VALUES ('$login','$title_id','$status');";
         insert($sql);
         return true;
     }
