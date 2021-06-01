@@ -33,9 +33,9 @@ function getPopularTitles()
     $sql = "SELECT title_id, title_name, title_description, title_cover, title_rank_acceess from titles ORDER BY visit_counter DESC LIMIT 8";
     return queryAll($sql);
 }
-function gettitleinfo($id)
+function gettitleinfo($id, $login)
 {
-    $sql = "SELECT * from titles where title_id = ".$id." ";
+    $sql = "SELECT titles.*, bookmarks.status from titles left join bookmarks on bookmarks.title_id = '$id' and titles.title_id = '$id' and bookmarks.login = '$login' ";
     return queryOne($sql);
 }
 function visitcounter($id)
