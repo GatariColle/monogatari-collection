@@ -154,7 +154,7 @@ function addbookmark($login, $title_id, $status): bool{
         return false;
     }
 }
-function showbookmark($login, $status) : bool{
+function showbookmark($login, $status){
     $sql = "SELECT titles.title_id, title_name, title_description, title_cover, title_rank_acceess from titles join bookmarks on bookmarks.title_id = titles.title_id and bookmarks.login = '$login' and bookmarks.status = '$status'";
     return queryAll($sql);
 }
