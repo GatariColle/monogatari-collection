@@ -22,7 +22,7 @@ $app->get('/read/{title_id}', function($title_id) use ($app) {
         ['name' => 'planning', 'text' => 'В планах'],
         ['name' => 'reading',  'text' => 'Читаю'],
         ['name' => 'finished', 'text' => 'Прочтено'],
-        ['name' => 'dropped',  'text' => 'Завершено'],
+        ['name' => 'dropped',  'text' => 'Заброшено'],
     ];
 
     return render('title.twig',
@@ -188,7 +188,8 @@ $app->get('/bookmarks', function () use ($app) {
         ['name' => 'planning', 'text' => 'В планах'],
         ['name' => 'reading',  'text' => 'Читаю'],
         ['name' => 'finished', 'text' => 'Прочтено'],
-        ['name' => 'dropped',  'text' => 'Завершено'],
+        ['name' => 'dropped',  'text' => 'Заброшено'],
+
     ];
 
     return render('bookmarks.twig', array('data' => $titles, 'buttons' => $buttons, 'status' => $status));
