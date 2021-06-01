@@ -108,6 +108,12 @@ function logIn($login, $pass): bool {
     }
     return false;
 }
+function logOut() {
+
+    session_start();
+    unset($_SESSION['user']);
+}
+//subscription
 function subscription($login): bool{
 
     // Your payment checking function call could be here
@@ -133,10 +139,24 @@ function unsubscription($login): bool{
         return false;
     }
 }
-function logOut() {
-
-    session_start();
-    unset($_SESSION['user']);
+//bookmarks
+function addbookmark($login, $title_id, $status): bool{
+    $sql = "Select * from bookmarks where login = '$login' and where title_id ='$title_id'";
+    $res = queryOne($sql);
+    if(empty($res)){
+        $sql = "INSERT INTO bookmarks(login, title_id,status) VALUES ('$login','$title_id','$status');";
+        insert($sql);
+        return true;
+    }
+    else{
+        $sql ="UPDATE bookmarks set status = '$status' where login ='$login' and where title_id = '$title_id'";
+        insert($sql);
+        return false;
+    }
+}
+function showbookmark($login, $status) : bool{
+    $sql = "SELECT titles.title_id, title_name, title_description, title_cover, title_rank_acceess from titles join bookmarks on bookmarks.title_id = titles.title_id and bookmarks.login = '$login' and bookmarks.status = '$status'";
+    return queryAll($sql);
 }
 // views
 function carousel(string $name, array $data = null):void
