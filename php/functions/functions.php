@@ -44,7 +44,7 @@ function getPopularTitles()
 }
 function gettitleinfo($id, $login)
 {
-    $sql = "SELECT titles.*, bookmarks.status from titles inner join bookmarks on bookmarks.title_id = '$id' and titles.title_id = '$id' and bookmarks.title_id = titles.title_id and bookmarks.login = '$login' ";
+    $sql = "SELECT titles.*, bookmarks.status from titles left join bookmarks on (bookmarks.title_id = titles.title_id and bookmarks.login = '$login') where titles.title_id = '$id'";
     return queryOne($sql);
 }
 function visitcounter($id)
