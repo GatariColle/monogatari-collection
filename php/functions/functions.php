@@ -149,7 +149,7 @@ function addbookmark($login, $title_id, $status): bool{
         return true;
     }
     else{
-        $sql ="UPDATE bookmarks set status = '$status' where login ='$login' and where title_id = '$title_id'";
+        $sql ="UPDATE bookmarks set status = '$status' where login ='$login' and title_id = '$title_id'";
         insert($sql);
         return false;
     }
