@@ -1,0 +1,20 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="bg-primary flex color-white content-center">
+            {% for button in buttons %}
+                <a href="/bookmarks?status={{ button.name }}" class="btn {% if button.name == status %} btn-active {% endif %}">{{ button.text }}</a>
+            {% endfor %}
+        </div>
+        <div class="card p-1 h-400">
+            {% if data %}
+                <div class="grid titles-grid p-1">
+                    {% for poster in data %}
+                        {% include 'poster.html' with {poster} %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

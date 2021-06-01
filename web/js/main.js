@@ -1,3 +1,23 @@
+function renderMessage(message) {
+    let form = document.querySelector('form')
+
+    if (!form)
+        return
+
+    let messageDiv = form.querySelector('#message');
+
+    if (!messageDiv) {
+        let html = `<div id="message">${message}</div>`
+        form.insertAdjacentHTML('beforeend', html)
+    } else {
+        messageDiv.textContent = message;
+    }
+}
+
+function submitForm(formId) {
+    document.getElementById(formId).submit();
+}
+
 (function () {
     let horizontalScrollables = document.querySelectorAll('.horizontal-scrollable')
     function scrollHorizontally(e) {
@@ -62,24 +82,6 @@
 
     applyFiltersButton.addEventListener('click', updateFormAction, false)
 })();
-
-
-function renderMessage(message) {
-    let form = document.querySelector('form')
-
-    if (!form)
-        return
-
-    let messageDiv = form.querySelector('#message');
-
-    if (!messageDiv) {
-        let html = `<div id="message">${message}</div>`
-        form.insertAdjacentHTML('beforeend', html)
-    } else {
-        messageDiv.textContent = message;
-    }
-}
-
 
 (function () {
     let userRegisterButton = document.getElementById("user-register-button");

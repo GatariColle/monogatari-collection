@@ -5,6 +5,21 @@
         <div class="flex">
             <div class="title-img">
                 <img src="{{ titleInfo.title_cover }}" alt="{{ titleInfo.title_altname }} poster">
+                {% if user is not null %}
+                    <div class="bookmark-selector-wrapper">
+                        <form action="/bookmarks" method="post" id="bookmark-form">
+                            <select name="bookmark-status" id="bookmark-status"
+                                    class="bookmark-selector" onchange="submitForm('bookmark-form');">
+                                <option value="default" selected disabled>Статус прочтения</option>
+                                <option value="planning">В планах</option>
+                                <option value="reading">Читаю</option>
+                                <option value="finished">Прочтено</option>
+                                <option value="dropped">Заброшено</option>
+                                <option value="delete" class="color-red">Удалить из закладок</option>
+                            </select>
+                        </form>
+                    </div>
+                {% endif %}
             </div>
             <div class="title-info">
                 <div class="title-name">
@@ -34,23 +49,26 @@
             <h2>Главы</h2>
             {% if user is null %}
                 <div>
-                    <p>Пожалуйста, <a href="/register" class="link">зарегистрируйтесь</a> или <a href="/login" class="link">войдите</a> в свою учетную запись, чтобы получить доступ к
+                    <p>Пожалуйста, <a href="/register" class="link">зарегистрируйтесь</a> или <a href="/login"
+                                                                                                 class="link">войдите</a>
+                        в свою учетную запись, чтобы получить доступ к
                         прочтению глав.</p>
                 </div>
             {% elseif user.access_rank < titleInfo.title_rank_acceess %}
                 <div>
-                    <p>Пожалуйста, оформиту <a href="/subscription" class="link">подписку</a> чтобы получить доступ к прочтению эксклюзивного тайтла.</p>
+                    <p>Пожалуйста, оформиту <a href="/subscription" class="link">подписку</a> чтобы получить доступ к
+                        прочтению эксклюзивного тайтла.</p>
                 </div>
             {% else %}
-                    <div class="vertical-scrollable card">
-                        <ol class="chapters-list">
-                            {% for chapter in chaptersList %}
-                                <li>
-                                    <a href="/read/{{ titleInfo.title_id }}/{{ chapter.chapter_id }}">{{ chapter.chapter_name }}</a>
-                                </li>
-                            {% endfor %}
-                        </ol>
-                    </div>
+                <div class="vertical-scrollable card">
+                    <ol class="chapters-list">
+                        {% for chapter in chaptersList %}
+                            <li>
+                                <a href="/read/{{ titleInfo.title_id }}/{{ chapter.chapter_id }}">{{ chapter.chapter_name }}</a>
+                            </li>
+                        {% endfor %}
+                    </ol>
+                </div>
             {% endif %}
         </div>
     </div>

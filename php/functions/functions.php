@@ -1,11 +1,17 @@
 <?php
 function insert($sql){
     require ('connection.php');
+    if ($con->error) {
+        throw new Exception($con->error);
+    }
     $con->query($sql);
 }
 function queryOne($sql): ?array {
     require('connection.php');
     $response = $con->query($sql);
+    if ($con->error) {
+        throw new Exception($con->error);
+    }
     $result = (!empty($response)) ? $response->fetch_assoc() : null;
     $con->close();
     return $result;
@@ -14,6 +20,9 @@ function queryOne($sql): ?array {
 function queryAll($sql): ?array {
     require('connection.php');
     $response = $con->query($sql);
+    if ($con->error) {
+        throw new Exception($con->error);
+    }
     $result = (!empty($response)) ? $response->fetch_all(MYSQLI_ASSOC) : null;
     $con->close();
     return $result;
@@ -140,18 +149,16 @@ function unsubscription($login): bool{
     }
 }
 //bookmarks
-function addbookmark($login, $title_id, $status): bool{
+function addbookmark($login, $title_id, $status) {
     $sql = "Select * from bookmarks where login = '$login' and title_id ='$title_id'";
     $res = queryOne($sql);
     if(empty($res)){
         $sql = "INSERT INTO bookmarks(login,title_id,status) VALUES ('$login','$title_id','$status');";
         insert($sql);
-        return true;
     }
     else{
         $sql ="UPDATE bookmarks set status = '$status' where login ='$login' and title_id = '$title_id'";
         insert($sql);
-        return false;
     }
 }
 function deletebookmark($login, $title_id){

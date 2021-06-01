@@ -165,6 +165,45 @@ $app->post('/search', function (Request $request) use ($app, $genresList) {
     return render('search.twig', array('data' => $searchResult, 'genresList' => $genresList));
 });
 
+$app->get('/bookmarks', function () use ($app) {
+    /**
+     * status - {planning, reading, finished, dropped, delete}
+     */
+    $status = $_GET['status'] ?? 'planning'; // get titles marked as `reading` by default
+    $user = getUser();
+
+    if (is_null($user))
+        return $app->redirect('/login?login_required');
+
+    $titles = showbookmark($user['login'], $status);
+    $buttons = [
+        ['name' => 'planning', 'text' => 'В планах'],
+        ['name' => 'reading',  'text' => 'Читаю'],
+        ['name' => 'finished', 'text' => 'Прочтено'],
+        ['name' => 'dropped',  'text' => 'Завершено'],
+    ];
+
+    return render('bookmarks.twig', array('data' => $titles, 'buttons' => $buttons, 'status' => $status));
+});
+
+$app->post('/bookmarks', function () use ($app) {
+    $user = getUser();
+    $status = $_POST['bookmark-status'];
+
+    $referer = getReferer();
+    if (is_null($user) || !str_contains($referer, '/read/') || empty($status)) {
+        throw new Exception("Something went wrong");
+    }
+
+    $title_id = explode('/read/', $referer)[1];
+    if ($status == "delete") {
+        deletebookmark($user['login'], $title_id);
+    } else {
+        addbookmark($user['login'], $title_id, $status);
+    }
+    return $app->redirect($referer);
+});
+
 $app->get('/error', function() use ($app) {
     throw new Exception("Sample error");
 });
