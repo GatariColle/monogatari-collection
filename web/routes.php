@@ -213,6 +213,34 @@ $app->post('/bookmarks', function () use ($app) {
     return $app->redirect($referer);
 });
 
+$app->get('/threads', function() {
+    $titles = getNTitles(20);
+    return render('threads.twig', array('titles' => $titles));
+});
+
+$app->get('/thread/{thread_id}', function ($thread_id) {
+    $title = gettitleinfo($thread_id);
+    $comments = array(
+        ['id' => 934623, 'author' => 'frossu', 'timestamp' => '7/6/2021 13:09:25', 'message' => 'Смотрел экранизацию, понравилось. Стоит
+                    читать?'],
+        ['id' => 934624, 'author' => 'morning refuge', 'timestamp' => '7/6/2021 13:15:47', 'message' => "frossu, если смотрел недавно то не стоит, но если хочется то почему нет?"]
+    );
+    return render('thread.twig', array('title' => $title, 'comments' => $comments));
+});
+
+$app->post('newpost', function () use ($app) {
+
+    $thread_id = $_POST['thread_id'];
+    $user = getUser();
+    $text = $_POST['newpost-message'];
+
+    if (empty($thread_id) || empty($text) || is_null($user))
+        return 'something went wrong';
+
+    newPost($user['login'], $thread_id, $text);
+    $app->redirect(getReferer());
+});
+
 $app->get('/error', function() use ($app) {
     throw new Exception("Sample error");
 });

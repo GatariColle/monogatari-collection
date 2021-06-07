@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="card p-1">
+            <h1 class="center">{{ title.title_name }}. Обсуждение</h1>
+            <hr>
+
+            {% for comment in comments %}
+                <div class="thread-post" id="{{ comment.id }}">
+                    <span><b>{{ comment.author }}</b> {{ comment.timestamp }}</span>
+                    <div class="post-message">{{ comment.message }}</div>
+                </div>
+            {% endfor %}
+
+            {% if user is not null %}
+                <div class="newpost-wrapper">
+                    <a href="#" id="newPostButton">Новый пост</a>
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+{% endblock %}

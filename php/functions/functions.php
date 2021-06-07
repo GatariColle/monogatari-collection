@@ -42,7 +42,7 @@ function getPopularTitles()
     $sql = "SELECT title_id, title_name, title_description, title_cover, title_rank_acceess from titles ORDER BY visit_counter DESC LIMIT 8";
     return queryAll($sql);
 }
-function gettitleinfo($id, $login)
+function gettitleinfo($id, $login = '')
 {
     $sql = "SELECT titles.*, bookmarks.status from titles left join bookmarks on (bookmarks.title_id = titles.title_id and bookmarks.login = '$login') where titles.title_id = '$id'";
     return queryOne($sql);
@@ -161,6 +161,7 @@ function addbookmark($login, $title_id, $status) {
         insert($sql);
     }
 }
+
 function deletebookmark($login, $title_id){
     $sql = "delete from bookmarks where login = '$login' and title_id = '$title_id'";
     insert($sql);
@@ -170,6 +171,7 @@ function showbookmark($login, $status){
     $sql = "SELECT titles.title_id, title_name, title_description, title_cover, title_rank_acceess from titles join bookmarks on bookmarks.title_id = titles.title_id and bookmarks.login = '$login' and bookmarks.status = '$status'";
     return queryAll($sql);
 }
+
 // views
 function carousel(string $name, array $data = null):void
 {

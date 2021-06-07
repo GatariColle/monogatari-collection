@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="card p-1">
+            <h1 class="center">Обсуждение тайтлов</h1>
+            <hr>
+            <div class="container">
+                {% for title in titles %}
+                <div class="mb-2" style="min-height: 50px">
+                    <a href="/thread/{{ title.title_id }}" style="width: 100%">
+                        <span class="flex">
+                            <b>{{ title.title_name }}</b>
+                            <span class="muted ml-auto" style="width: fit-content;">Сообщений: {{ title.msg_count ?? 100500 }}</span>
+                        </span>
+                        {% if title.title_id == 115 %}
+                        <p style="margin-left: 8px; color: #a7a7a7;">frossu: Смотрел экранизацию, понравилось. Стоит
+                            читать?</p>
+                        {% endif %}
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

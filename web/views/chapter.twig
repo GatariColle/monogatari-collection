@@ -6,12 +6,12 @@
         <div>{{ chapter.chapter_text | raw }}</div>
 
         {% if prevId is not null or nextId is not null %}
-            <div class="chapter-switcher">
+            <div class="chapter-switcher flex">
                 {% if prevId is not null %}
-                    <a class="btn-primary" style="padding: 15px;" href="/read/{{ titleId }}/{{ prevId }}">Предыдущая глава</a>
+                    <a class="btn btn-primary" href="/read/{{ titleId }}/{{ prevId }}">Предыдущая глава</a>
                 {% endif %}
                 {% if nextId is not null %}
-                    <a class="btn-primary" style="margin-left: auto; padding: 15px;" href="/read/{{ titleId }}/{{ nextId }}">Следующая глава</a>
+                    <a class="btn btn-primary ml-auto" href="/read/{{ titleId }}/{{ nextId }}">Следующая глава</a>
                 {% endif %}
             </div>
         {% endif %}
