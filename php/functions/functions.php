@@ -171,7 +171,20 @@ function showbookmark($login, $status){
     $sql = "SELECT titles.title_id, title_name, title_description, title_cover, title_rank_acceess from titles join bookmarks on bookmarks.title_id = titles.title_id and bookmarks.login = '$login' and bookmarks.status = '$status'";
     return queryAll($sql);
 }
-
+//threads
+function newpost($thread_id,$text, $author){
+    $sql ="insert into threads(thread_id,text,author) values('$thread_id','$text','$author')";
+    insert($sql);
+}
+function getComments($thread_id){
+    $sql = "SELECT * FROM THREADS where thread_id = '$thread_id'";
+    return queryAll($sql);
+}
+function gettreadinfo($thread_id)
+{
+    $sql = "";
+    return queryAll($sql);
+}
 // views
 function carousel(string $name, array $data = null):void
 {
