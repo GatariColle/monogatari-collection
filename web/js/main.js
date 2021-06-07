@@ -168,6 +168,51 @@ function submitForm(formId) {
     showPaymentFormButton.addEventListener('click', insertPaymentForm)
 })();
 
+let toggleTheme = () => {
+    let theme = localStorage.getItem('theme')
+    let themeSwitcherContainer = document.getElementById('theme-switcher-container')
+    let body = document.querySelector('body')
+    let text = ''
+    if (theme === 'light') {
+        body.classList.remove('light')
+        body.classList.add('dark')
+        theme = 'dark'
+        text = 'Светлая тема'
+    } else {
+        body.classList.remove('dark')
+        body.classList.add('light')
+        theme = 'light'
+        text = 'Тёмная тема'
+    }
+    localStorage.setItem('theme', theme)
+    themeSwitcherContainer.querySelector('p').textContent = text
+};
+
+(function () {
+    let theme = localStorage.getItem('theme')
+
+    if (!theme)
+        localStorage.setItem('theme', 'light')
+
+    document.querySelector('body').classList.add(theme)
+
+    let themeSwitcherContainer = document.getElementById('theme-switcher-container')
+
+    if (!themeSwitcherContainer)
+        return
+
+    let html = ''
+    switch (theme) {
+        case 'dark':
+            html = '<p>Светлая тема</p>'
+            break
+        default:
+            html = '<p>Тёмная тема</p>'
+
+    }
+    themeSwitcherContainer.insertAdjacentHTML('beforeend', html)
+    themeSwitcherContainer.querySelector('p').addEventListener('click', toggleTheme)
+})();
 
 let validateCardNo = function (no) {
     return (no && checkLuhn(no) &&
@@ -191,3 +236,4 @@ let checkLuhn = function (cardNo) {
     }
     return parseInt(s) % 10 === 0;
 }
+

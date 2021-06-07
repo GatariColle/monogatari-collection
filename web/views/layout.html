@@ -4,7 +4,7 @@
     {% include 'header.html' %}
 </head>
 
-<body>
+<body">
 {% include 'drawer.html' %}
 <div class="wrapper">
     {% if user is null %}
@@ -12,7 +12,7 @@
     {% else %}
         {% include 'topbar.html' with {user} %}
     {% endif %}
-    <div class="content-wrapper {{ theme ?? 'light' }}">
+    <div class="content-wrapper">
         {% block content %}{% endblock %}
         {% include 'footer.html' %}
     </div>

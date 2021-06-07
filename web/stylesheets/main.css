@@ -93,9 +93,33 @@
 html, body {
   margin: 0;
   padding: 0;
-  background: #f2f2f2;
   font-family: 'Roboto', sans-serif;
-  color: #FFF;
+}
+
+body.light {
+  background: #f2f2f2;
+  color: #000;
+}
+
+body.dark {
+  background: #1f2223;
+  color: #fff;
+}
+
+body.light .card {
+  background: #fff;
+}
+
+body.dark .card,
+body.dark textarea,
+body.dark input,
+body.dark select {
+  background: #181A1B;
+  color: #fff;
+}
+
+body.dark .thread-post {
+  background: #2b2f31;
 }
 
 a {
@@ -133,6 +157,7 @@ a:hover {
   width: 100%;
   height: var(--topbar-height);
   background-color: #673AB7;
+  color: #fff;
 }
 
 .content-wrapper {
@@ -141,14 +166,6 @@ a:hover {
   display: flex;
   flex-direction: column;
   padding-top: 1rem;
-}
-
-.content-wrapper .card {
-  background: #fff;
-}
-
-.content-wrapper.light {
-  color: #000;
 }
 
 .footer,
@@ -195,6 +212,7 @@ a:hover {
   transition: left .15s ease-out;
   z-index: 999;
   overflow-y: auto;
+  color: #fff;
 }
 
 .drawer-expanded {
