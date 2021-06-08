@@ -110,18 +110,6 @@ function submitForm(formId) {
     if (!newPostButton)
         return
 
-    let insertForm = () => {
-        newPostButton.insertAdjacentHTML('afterend',
-            '<form action="/newpost?thread_id={{ title.title_id }}" method="post"> \
-                <div class="form-group"> \
-                                <textarea name="newpost-message" class="newpost-message" cols="30" rows="10" \
-                                          placeholder="Текст поста" maxLength="500" required></textarea> \
-                </div> \
-                <button type="submit" class="btn btn-primary ml-auto">Опубликовать</button> \
-                </form>'
-        )
-        newPostButton.remove()
-    }
     newPostButton.addEventListener('click', insertForm);
 })();
 

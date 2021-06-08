@@ -230,7 +230,7 @@ $app->get('/thread/{thread_id}', function ($thread_id) {
 
 $app->post('newpost', function () use ($app) {
 
-    $thread_id = $_POST['thread_id'];
+    $thread_id = $_REQUEST['thread_id'];
     $user = getUser();
     $text = $_POST['newpost-message'];
 
@@ -238,7 +238,7 @@ $app->post('newpost', function () use ($app) {
         return 'something went wrong';
 
     newPost($user['login'], $thread_id, $text);
-    $app->redirect(getReferer());
+    return $app->redirect(getReferer());
 });
 
 $app->get('/error', function() use ($app) {
