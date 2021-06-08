@@ -7,9 +7,9 @@
             <hr>
 
             {% for comment in comments %}
-                <div class="thread-post" id="{{ comment.id }}">
-                    <span><b>{{ comment.author }}</b> {{ comment.timestamp }}</span>
-                    <div class="post-message">{{ comment.message }}</div>
+                <div class="thread-post" id="{{ comment.comment_id }}">
+                    <span><b>{{ comment.author }}</b> {{ comment.time }}</span>
+                    <div class="post-message">{{ comment.text }}</div>
                 </div>
             {% endfor %}
 
@@ -20,8 +20,9 @@
                 <script>
                     let insertForm = () => {
                         newPostButton.insertAdjacentHTML('afterend',
-                            '<form action="/newpost?thread_id={{ title.title_id }}" method="get"> \
+                            '<form action="/newpost" method="get "> \
                 <div class="form-group"> \
+                                <input name="thread_id" value="{{ title.title_id }}" style="visibility: hidden;"></input>                                                                             \
                                 <textarea name="newpost-message" class="newpost-message" cols="30" rows="10" \
                                           placeholder="Текст поста" maxLength="500" required></textarea> \
                 </div> \

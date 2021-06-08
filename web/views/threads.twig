@@ -11,12 +11,8 @@
                     <a href="/thread/{{ title.title_id }}" style="width: 100%">
                         <span class="flex">
                             <b>{{ title.title_name }}</b>
-                            <span class="muted ml-auto" style="width: fit-content;">Сообщений: {{ title.msg_count ?? 100500 }}</span>
+                            <span class="muted ml-auto" style="width: fit-content;">Сообщений: {{ title.comments_no ?? 0 }}</span>
                         </span>
-                        {% if title.title_id == 115 %}
-                        <p style="margin-left: 8px; color: #a7a7a7;">frossu: Смотрел экранизацию, понравилось. Стоит
-                            читать?</p>
-                        {% endif %}
                     </a>
                 </div>
                 {% endfor %}
