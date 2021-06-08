@@ -377,7 +377,7 @@ a:hover {
 .nav-item {
   display: flex;
   font-weight: bold;
-  font-size: 24px;
+  font-size: 16px;
   align-items: center;
   grid-column-gap: 5px;
 }
