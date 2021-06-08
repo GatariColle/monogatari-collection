@@ -180,9 +180,11 @@ function getComments($thread_id){
     $sql = "SELECT * FROM THREADS where thread_id = '$thread_id'";
     return queryAll($sql);
 }
-function gettreadinfo($thread_id)
+function getthreadsinfo()
 {
-    $sql = "";
+    $sql = "SELECT t.title_id, t.title_name, j.comments_no FROM titles AS t LEFT JOIN
+(SELECT threads.thread_id, COUNT(threads.comment_id) as comments_no FROM threads GROUP BY threads.thread_id
+) as j ON (t.title_id = j.thread_id)";
     return queryAll($sql);
 }
 // views
