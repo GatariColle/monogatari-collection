@@ -12,5 +12,9 @@ if ($info['scheme'] != 'mysql')
 
 $con = new mysqli($info['host'], $info['user'], $info['pass'], str_replace('/', '', $info['path']))
 or die ('Could not connect to the database server' . mysqli_connect_error());
-$con->query("SET NAMES UTF8");
+// $con->query("SET NAMES UTF8");
+if (!$con->set_charset('utf8mb4')) {
+    printf("Exception when setting utf8mb4 charset: %s\n", $con->error);
+    exit;
+}
 ?>
