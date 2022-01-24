@@ -11,6 +11,11 @@ $app->get('/', function() use ($app) {
 $app->get('/read/{title_id}', function($title_id) use ($app) {
     $login = is_null(getUser()) ? '' : getUser()['login'];
     $titleInfo = gettitleinfo($title_id, $login);
+
+    // temporary workaround for split genres list
+    $titleInfo['genres'] = implode(', ', explode(',', $titleInfo['genres']));
+    // end of temporary workaround
+
     if (empty($titleInfo)) {
         return render('error_page.twig',
             array('message' => "Страница не найдена"));
